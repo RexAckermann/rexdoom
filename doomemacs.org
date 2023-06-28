@@ -7,6 +7,7 @@
 #+auto_tangle: t
 #+startup: showeverything
 
+My doom config.I know it's a mess.
 
 * TABLE OF CONTENTS :toc:
 - [[#doomconfig][DoomConfig]]
