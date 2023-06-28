@@ -243,6 +243,9 @@ A minimap sidebar displaying a smaller version of the current buffer on either t
 
 #+end_src
 
+#+RESULTS:
+: imenu-list-smart-toggle
+
 
 **** Emacsclient startup
 
@@ -993,7 +996,7 @@ they are implemented.
 #+AUTHOR: Rex Ackermann
 #+EMAIL: ackermann88888@gmail.com
 #+DATE: 2023-05-27 00:52:46+06:00
-#+property: header-args :tangle ~/.config/doom/init.el
+#+property: header-args
 #+auto_tangle: t
 #+startup: showeverything
 
@@ -1030,7 +1033,7 @@ NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
 
 ** Main
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle ~/.config/doom/init.el
 
 (doom! :input
        ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
@@ -1221,7 +1224,7 @@ NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
 #+AUTHOR: Rex Ackermann
 #+EMAIL: ackermann88888@gmail.com
 #+DATE: 2023-05-27 00:50:30+06:00
-#+property: header-args :tangle ~/.config/doom/packages.el
+#+property: header-args
 #+auto_tangle: t
 #+startup: showeverything
 
@@ -1276,7 +1279,7 @@ release. The `unpin!' macro allows you to unpin single packages...
 
 ** Packages
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle ~/.config/doom/packages.el
 
 ;-**- no-byte-compile: t; -**-
 
