@@ -1,0 +1,18 @@
+# key: /bashcom
+# name: Bash Script Remove Comments and Blank lines
+# --
+
+* Strip Comments and Blank Lines
+
+Note: Make sure this block is at the end of the file.
+
+#+begin_src bash
+
+tangle_file=${1:tangle_file_name}
+
+sed -i 's/\# .*$//g' "$tangle_file"
+sed -i '/^ *$/d' "$tangle_file"
+
+head -n -${2:Number_of_lines_in_this_block} "$tangle_file" >> "$tangle_file".temp && mv "$tangle_file".temp "$tangle_file"
+
+#+end_src

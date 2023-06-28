@@ -1,0 +1,17 @@
+# key: /orginit
+# name: orginit# key: /orginit
+# name: orginit
+# --
+
+#+title: ${1:Title}
+#+DESCRIPTION: ${2:Description}
+#+AUTHOR: ${3:Rex Ackermann}
+#+EMAIL : ${4:ackermann88888@gmail.com}
+#+DATE: ${5:`(format-time-string "%Y-%m-%d %H:%M:%S%:z")`}
+#+property: header-args :tangle ${6:Tangle_File_Location} :shebang #!/bin/env ${7:bash}
+#+OPTIONS: toc:5
+#+auto_tangle: t
+#+startup: showeverything
+
+
+* TABLE OF CONTENTS :toc:
