@@ -30,7 +30,7 @@
 
 #+DESCRIPTION: Rex's Doom Emacs config
 #+AUTHOR: Rex Ackermann
-#+EMAIL : ackermann88888@gmail.com
+#+EMAIL: ackermann88888@gmail.com
 #+DATE: 2023-05-27 00:18:48+06:00
 #+property: header-args :tangle ~/.config/doom/config.el
 #+OPTIONS: toc:5
@@ -990,7 +990,7 @@ they are implemented.
 
 #+DESCRIPTION: Rex's Doom Emacs init
 #+AUTHOR: Rex Ackermann
-#+EMAIL : ackermann88888@gmail.com
+#+EMAIL: ackermann88888@gmail.com
 #+DATE: 2023-05-27 00:52:46+06:00
 #+property: header-args :tangle ~/.config/doom/init.el
 #+auto_tangle: t
@@ -1218,7 +1218,7 @@ NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
 
 #+DESCRIPTION: Rex's Doom Emacs packages
 #+AUTHOR: Rex Ackermann
-#+EMAIL : ackermann88888@gmail.com
+#+EMAIL: ackermann88888@gmail.com
 #+DATE: 2023-05-27 00:50:30+06:00
 #+property: header-args :tangle ~/.config/doom/packages.el
 #+auto_tangle: t
