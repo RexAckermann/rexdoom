@@ -1,0 +1,1321 @@
+#+title: DoomEmacsConfigs
+#+DESCRIPTION: All Doom Emacs Configs in one file.
+#+AUTHOR: Rex Ackermann
+#+EMAIL : ackermann88888@gmail.com
+#+DATE: 2023-06-28 14:23:43+06:00
+#+OPTIONS: toc:5
+#+auto_tangle: t
+#+startup: showeverything
+
+
+* TABLE OF CONTENTS :toc:
+- [[#doomconfig][DoomConfig]]
+  - [[#start][start]]
+  - [[#private-configuration][Private Configuration]]
+  - [[#org-default-location][Org Default Location]]
+  - [[#tramp-mode][TRAMP Mode]]
+  - [[#load-additional-scripts][Load Additional Scripts]]
+  - [[#looks][Looks]]
+  - [[#modifications-and-scripts][Modifications and Scripts]]
+  - [[#package-configuration][Package Configuration]]
+- [[#doominit][DoomInit]]
+  - [[#table-of-contents][TABLE OF CONTENTS]]
+  - [[#start-1][start]]
+  - [[#message][Message]]
+  - [[#main][Main]]
+- [[#doompackages][DoomPackages]]
+  - [[#packages][Packages]]
+
+* DoomConfig
+
+#+title: DoomConfig
+#+DESCRIPTION: Rex's Doom Emacs config
+#+AUTHOR: Rex Ackermann
+#+EMAIL : ackermann88888@gmail.com
+#+DATE: 2023-05-27 00:18:48+06:00
+#+property: header-args :tangle ~/.config/doom/config.el
+#+OPTIONS: toc:5
+#+auto_tangle: t
+#+startup: showeverything
+
+** start
+
+#+begin_src emacs-lisp
+
+; $DOOMDIR/config.el -**- lexical-binding: t; -**-
+
+#+end_src
+
+
+** Private Configuration
+
+Place your private configuration here! Remember, you do not need to run 'doom
+sync' after modifying this file!
+
+
+Some functionality uses this to identify you, e.g. GPG configuration, email
+clients, file templates and snippets. It is optional.
+
+#+begin_src emacs-lisp
+
+(setq user-full-name "Rex Ackermann"
+      user-mail-address "ackermann88888@gmail.com")
+
+#+end_src
+
+
+** Org Default Location
+
+If you use `org' and don't want your org files in the default location below,
+change `org-directory'. It must be set before org loads!
+
+#+begin_src emacs-lisp
+
+(setq org-directory "~/org/")
+
+#+end_src
+
+
+** TRAMP Mode
+
+#+begin_src emacs-lisp
+
+(eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+
+#+end_src
+** Load Additional Scripts
+
+#+begin_src emacs-lisp
+
+;;; Emacs Load Path
+(setq load-path (cons "~/.config/scripts/" load-path))
+
+#+end_src
+
+
+** Looks
+
+**** Fonts
+
+Doom exposes five (optional) variables for controlling fonts in Doom:
+
+- `doom-font' -- the primary font to use
+- `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+- `doom-big-font' -- used for `doom-big-font-mode'; use this for
+  presentations or streaming.
+- `doom-unicode-font' -- for unicode glyphs
+- `doom-serif-font' -- for the `fixed-pitch-serif' face
+
+See 'C-h v doom-font' for documentation and more examples of what they
+accept. For example:
+
+#+begin_src emacs-lisp
+
+
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+
+(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 15)
+      doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 15)
+      doom-serif-font (font-spec :family "FiraCode Nerd Font" :size 15)
+      doom-unicode-font (font-spec :family "FiraCode Nerd Font" :size 15)
+      doom-big-font (font-spec :family "FiraCode Nerd Font" :size 25)
+      )
+  ;; (setq! doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 12))
+  ;; (setq doom-font "Terminus (TTF):pixelsize=12:antialias=off")
+  ;; (setq doom-font "Fira Code-14")
+
+#+end_src
+
+If you or Emacs can't find your font, use 'M-x describe-font' to look them
+up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+refresh your font settings. If Emacs still can't find your font, it likely
+wasn't installed correctly. Font issues are rarely Doom issues!
+
+
+**** Syntax Highlighting Everywhere
+
+#+begin_src emacs-lisp
+
+(global-font-lock-mode t)
+
+#+end_src
+
+**** Theme
+
+There are two ways to load a theme. Both assume the theme is installed and
+available. You can either set `doom-theme' or manually load a theme with the
+`load-theme' function. This is the default:
+
+#+begin_src emacs-lisp
+
+(setq doom-theme 'doom-molokai)
+
+#+end_src
+
+
+**** Line Numbers
+
+This determines the style of line numbers in effect. If set to `nil', line
+numbers are disabled. For relative line numbers, set this to `relative'.
+
+#+begin_src emacs-lisp
+
+(setq display-line-numbers-type 'relative)
+
+#+end_src
+
+
+**** Transparency
+
+#+begin_src emacs-lisp
+
+;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
+;;(set-frame-parameter (selected-frame) 'alpha <both>)
+(set-frame-parameter (selected-frame) 'alpha '(95 . 85))
+(add-to-list 'default-frame-alist '(alpha . (95 . 85)))
+
+#+end_src
+
+
+**** Window Size
+
+#+begin_src emacs-lisp
+
+;;       '((height . 720)
+;;         (width . 1080)))
+;; (setq default-frame-alist '((fullscreen . maximized)))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(setq frame-inhibit-implied-resize t)
+
+;; (setq +lsp-company-backends '(:separate company-yasnippet company-capf))
+
+;; (defun gjg/winner-clean-up-modified-list ()
+;;   "Remove dead frames from `winner-modified-list`"
+;;   (dolist (frame winner-modified-list)
+;;     (unless (frame-live-p frame)
+;;       (delete frame winner-modified-list))))
+;; (advice-add 'winner-save-old-configurations :before #'gjg/winner-clean-up-modified-list)
+
+#+end_src
+
+#+RESULTS:
+: t
+
+**** MODELINE
+
+The modeline is the bottom status bar that appears in Emacs windows.  For more information on what is available to configure in the Doom modeline, check out:
+  https://github.com/seagle0128/doom-modeline
+
+#+begin_src emacs-lisp
+
+;; (set-face-attribute 'mode-line nil :font "Ubuntu Mono-13")
+(setq doom-modeline-height 30     ;; sets modeline height
+      doom-modeline-bar-width 5   ;; sets right bar width
+      doom-modeline-persp-name t  ;; adds perspective name to modeline
+      doom-modeline-persp-icon t) ;; adds folder icon next to persp name
+#+end_src
+
+
+**** MINIMAP
+A minimap sidebar displaying a smaller version of the current buffer on either the left or right side. It highlights the currently shown region and updates its position automatically.  Be aware that this minimap program does not work in Org documents.  This is not unusual though because I have tried several minimap programs and none of them can handle Org.
+
+#+begin_src emacs-lisp
+
+;; (minimap-mode)
+;; (add-hook 'kill-buffer-hook 'minimap-kill)
+;; (add-hook 'kill-emacs-hook 'minimap-kill)
+#+end_src
+
+#+RESULTS:
+
+** Modifications and Scripts
+
+**** Key Maps
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Search in Buffer" "/" #'+default/search-buffer
+      :desc "Go to" "." #'helm-find-files
+      :desc "Sudo-Edit" "t s" #'sudo-edit
+      :desc "Imenu-List" "t I" #'imenu-list-smart-toggle
+      )
+
+#+end_src
+
+
+**** Emacsclient startup
+
+#+begin_src emacs-lisp
+;; (defun emacsclient_startup (_)
+;;   (demap-open))
+
+;; (add-to-list 'after-make-frame-functions 'minimap-mode)
+
+;; (add-hook 'server-visit-hook 'demap-open)
+#+end_src
+
+
+**** Run Code Block
+
+#+begin_src emacs-lisp
+
+;; This function runs code inside selected block or or on whole buffer.
+
+(defun auto_quickrun (beginning-of-buffer end)
+  "Runs selected if a region is active, otherwise runs not-selected."
+  (interactive "r")
+  (if (region-active-p)
+      (quickrun-region beginning-of-buffer end)
+    (quickrun)))
+
+(map! :leader
+      :desc "RunCode-quickrun" "c r" #'auto_quickrun
+      :desc "RunCode-quickrun-buffer" "c b" 'quickrun
+      )
+;; (global-set-key (kbd "SPC c r") 'auto_quickrun)
+#+end_src
+
+#+RESULTS:
+: quickrun
+
+
+****** C Block
+
+#+begin_src emacs-lisp
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages '((C . t)))
+
+#+end_src
+
+**** :exec
+
+#+begin_src emacs-lisp
+;; (defun my/run-babel-exec-blocks ()
+;;   "Execute babel :exec blocks in current buffer."
+;;   (interactive)
+;;   (org-babel-map-src-blocks nil
+;;     (let ((header (org-babel-get-header (point) :eval)))
+;;       (when (string-match-p ":exec" header)
+;;         (org-babel-execute-src-block)))))
+;; (add-hook 'after-save-hook #'my/run-babel-exec-blocks)
+
+;; (setq enable-local-eval t)
+#+end_src
+
+
+**** Org-babel-edit
+
+#+begin_src emacs-lisp
+
+(defun org-babel-edit ()
+  "Edit python src block with lsp support by tangling the block and
+then setting the org-edit-special buffer-file-name to the
+absolute path. Finally load eglot."
+  (interactive)
+
+;; org-babel-get-src-block-info returns lang, code_src, and header
+;; params; Use nth 2 to get the params and then retrieve the :tangle
+;; to get the filename
+  (setq tangled-file-name (expand-file-name (assoc-default :tangle (nth 2 (org-babel-get-src-block-info)))))
+
+  ;; tangle the src block at point
+  ;; (org-babel-tangle '(4))
+  (org-edit-special)
+
+  ;; Now we should be in the special edit buffer with python-mode. Set
+  ;; the buffer-file-name to the tangled file so that pylsp and
+  ;; plugins can see an actual file.
+  (setq-local buffer-file-name tangled-file-name)
+  (eglot-ensure)
+  )
+#+end_src
+
+Key Maps
+
+#+begin_src emacs-lisp
+
+(map! :leader
+      :desc "Org-Block" "b e" #'org-babel-edit
+      )
+
+#+end_src
+
+
+**** docx
+
+Check if current buffer's file is docx ,then convert file to a org file and open it.And when I save the file convert file to the docx's name emacs lisp
+
+Here's an Emacs Lisp function that checks if the current buffer's file is a docx, converts it to org format, and opens it. When you save the org file, it will be automatically saved with the same name as the original docx file.
+
+#+begin_src emacs-lisp
+
+(defun convert-docx-to-org-and-open ()
+  "Convert the current buffer's file from docx to org format and open it."
+  (interactive)
+  (when (and (buffer-file-name)
+             (string= (file-name-extension (buffer-file-name)) "docx"))
+    (let** ((docx-file (buffer-file-name))
+           (org-file (concat (file-name-sans-extension docx-file) ".org")))
+      (call-process "pandoc" nil nil nil "--from=docx" "--to=org"
+                    docx-file "-o" org-file)
+      (find-file org-file)
+      (add-hook 'after-save-hook
+                   (call-process "pandoc" nil nil nil "--from=org" "--to=docx"
+                                 (buffer-file-name) "-o" docx-file)))))
+
+#+end_src
+
+Key Maps
+
+#+begin_src emacs-lisp
+
+(global-set-key (kbd "C-c d") 'convert-docx-to-org-and-open)
+
+#+end_src
+
+This would bind the function to the key sequence C-c d.
+
+
+**** lsp-org
+
+#+begin_src emacs-lisp
+
+;; (defun lsp-org ()
+;;   (interactive)
+;;   (-if-let ((virtual-buffer &as &plist :workspaces) (-first (-lambda ((&plist :in-range))
+;;                                                               (funcall in-range))
+;;                                                             lsp--virtual-buffer-connections))
+;;       (unless (equal lsp--virtual-buffer virtual-buffer)
+;;         (setq lsp--buffer-workspaces workspaces)
+;;         (setq lsp--virtual-buffer virtual-buffer)
+;;         (setq lsp-buffer-uri nil)
+;;         (lsp-mode 1)
+;;         (lsp-managed-mode 1)
+;;         (lsp-patch-on-change-event))
+
+;;     (save-excursion
+;;       (-let**** (virtual-buffer
+;;               (wcb (lambda (f)
+;;                      (with-current-buffer (plist-get virtual-buffer :buffer)
+;;                        (-let**** (((&plist :major-mode :buffer-file-name
+;;                                         :goto-buffer :workspaces) virtual-buffer)
+;;                                (lsp--virtual-buffer virtual-buffer)
+;;                                (lsp--buffer-workspaces workspaces))
+;;                          (save-excursion
+;;                            (funcall goto-buffer)
+;;                            (funcall f))))))
+;;               ((&plist :begin :end :post-blank :language) (cl-second (org-element-context)))
+;;               ((&alist :tangle file-name) (cl-third (org-babel-get-src-block-info 'light)))
+
+;;               (file-name (if file-name
+;;                              (f-expand file-name)
+;;                            (user-error "You should specify file name in the src block header.")))
+;;               (begin-marker (progn
+;;                               (goto-char begin)
+;;                               (forward-line)
+;;                               (set-marker (make-marker) (point))))
+;;               (end-marker (progn
+;;                             (goto-char end)
+;;                             (forward-line (1- (- post-blank)))
+;;                             (set-marker (make-marker) (1+ (point)))))
+;;               (buf (current-buffer))
+;;               (src-block (buffer-substring-no-properties begin-marker
+;;                                                          (1- end-marker)))
+;;               (indentation (with-temp-buffer
+;;                              (insert src-block)
+
+;;                              (goto-char (point-min))
+;;                              (let ((indentation (current-indentation)))
+;;                                (plist-put lsp--virtual-buffer :indentation indentation)
+;;                                (org-do-remove-indentation)
+;;                                (goto-char (point-min))
+;;                                (- indentation (current-indentation))))))
+;;         (add-hook 'post-command-hook #'lsp--virtual-buffer-update-position nil t)
+
+;;         (when (fboundp 'flycheck-add-mode)
+;;           (lsp-flycheck-add-mode 'org-mode))
+
+;;         (setq lsp--virtual-buffer
+;;               (list
+;;                :in-range (lambda (&optional point)
+;;                            (<= begin-marker (or point (point)) (1- end-marker)))
+;;                :goto-buffer (lambda () (goto-char begin-marker))
+;;                :buffer-string
+;;                (lambda ()
+;;                  (let ((src-block (buffer-substring-no-properties
+;;                                    begin-marker
+;;                                    (1- end-marker))))
+;;                    (with-temp-buffer
+;;                      (insert src-block)
+
+;;                      (goto-char (point-min))
+;;                      (while (not (eobp))
+;;                        (delete-region (point) (if (> (+ (point) indentation) (point-at-eol))
+;;                                                   (point-at-eol)
+;;                                                 (+ (point) indentation)))
+;;                        (forward-line))
+;;                      (buffer-substring-no-properties (point-min)
+;;                                                      (point-max)))))
+;;                :buffer buf
+;;                :begin begin-marker
+;;                :end end-marker
+;;                :indentation indentation
+;;                :last-point (lambda () (1- end-marker))
+;;                :cur-position (lambda ()
+;;                                (lsp-save-restriction-and-excursion
+;;                                  (list :line (- (lsp--cur-line)
+;;                                                 (lsp--cur-line begin-marker))
+;;                                        :character (let ((character (- (point)
+;;                                                                       (line-beginning-position)
+;;                                                                       indentation)))
+;;                                                     (if (< character 0)
+;;                                                         0
+;;                                                       character)))))
+;;                :line/character->point (-lambda (line character)
+;;                                         (-let [inhibit-field-text-motion t]
+;;                                           (+ indentation
+;;                                              (lsp-save-restriction-and-excursion
+;;                                                (goto-char begin-marker)
+;;                                                (forward-line line)
+;;                                                (-let [line-end (line-end-position)]
+;;                                                  (if (> character (- line-end (point)))
+;;                                                      line-end
+;;                                                    (forward-char character)
+;;                                                    (point)))))))
+;;                :major-mode (org-src-get-lang-mode language)
+;;                :buffer-file-name file-name
+;;                :buffer-uri (lsp--path-to-uri file-name)
+;;                :with-current-buffer wcb
+;;                :buffer-live? (lambda (_) (buffer-live-p buf))
+;;                :buffer-name (lambda (_)
+;;                               (propertize (format "%s(%s:%s)%s"
+;;                                                   (buffer-name buf)
+;;                                                   begin-marker
+;;                                                   end-marker
+;;                                                   language)
+;;                                           'face 'italic))
+;;                :real->virtual-line (lambda (line)
+;;                                      (+ line (line-number-at-pos begin-marker) -1))
+;;                :real->virtual-char (lambda (char) (+ char indentation))
+;;                :cleanup (lambda ()
+;;                           (set-marker begin-marker nil)
+;;                           (set-marker end-marker nil))))
+;;         (setf virtual-buffer lsp--virtual-buffer)
+;;         (puthash file-name virtual-buffer lsp--virtual-buffer-mappings)
+;;         (push virtual-buffer lsp--virtual-buffer-connections)
+
+;;         ;; TODO: tangle only connected sections
+;;         (add-hook 'after-save-hook 'org-babel-tangle nil t)
+;;         (add-hook 'lsp-after-open-hook #'lsp-patch-on-change-event nil t)
+;;         (add-hook 'kill-buffer-hook #'lsp-kill-virtual-buffers nil t)
+
+;;         (setq lsp--buffer-workspaces
+;;               (lsp-with-current-buffer virtual-buffer
+;;                 (lsp)
+;;                 (plist-put virtual-buffer :workspaces (lsp-workspaces))
+;;                 (lsp-workspaces)))))))
+
+#+end_src
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+** Package Configuration
+
+Whenever you reconfigure a package, make sure to wrap your config in an
+`after!' block, otherwise Doom's defaults may override your settings. E.g.
+
+  (after! PACKAGE
+    (setq x y))
+
+The exceptions to this rule:
+
+  - Setting file/directory variables (like `org-directory')
+  - Setting variables which explicitly tell you to set them before their
+    package is loaded (see 'C-h v VARIABLE' to look up their documentation).
+  - Setting doom variables (which start with 'doom-' or '+').
+
+Here are some additional functions/macros that will help you configure Doom.
+
+- `load!' for loading external **.el files relative to this one
+- `use-package!' for configuring packages
+- `after!' for running code after a package has loaded
+- `add-load-path!' for adding directories to the `load-path', relative to
+  this file. Emacs searches the `load-path' when you load packages with
+  `require' or `use-package'.
+- `map!' for binding new keys
+
+To get information about any of these functions/macros, move the cursor over
+the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+This will open documentation for it, including demos of how they are used.
+Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+etc).
+
+You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+they are implemented.
+(add-hook 'window-setup-hook #'toggle-frame-maximized)
+
+#+begin_src emacs-lisp
+
+
+#+end_src
+
+
+**** Imenu
+
+#+begin_src emacs-lisp
+
+;; imenu-list
+
+(setq imenu-list-focus-after-activation t)
+(setq imenu-list-auto-resize t)
+(setq zone-timer (run-with-idle-timer 100 t 'zone))
+
+#+end_src
+
+
+**** org-auto-tangle
+
+#+begin_src emacs-lisp
+;; org-auto-tangle
+
+;; (require 'org-auto-tangle)
+;; (add-hook 'org-mode-hook 'org-auto-tangle-mode)
+;; (setq org-auto-tangle-default t)
+
+(use-package! org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-default t))
+
+(defun dt/insert-auto-tangle-tag ()
+  "Insert auto-tangle tag in a literate config."
+  (interactive)
+  (evil-org-open-below 1)
+  (insert "#+auto_tangle: t ")
+  (evil-force-normal-state))
+
+(map! :leader
+      :desc "Insert auto_tangle tag" "i a" #'dt/insert-auto-tangle-tag)
+#+end_src
+
+
+**** Clippy
+
+#+begin_src emacs-lisp
+;; clippy
+
+;; (setq clippy-tip-show-function #'clippy-popup-tip-show)
+
+#+end_src
+
+
+**** undo-tree
+
+#+begin_src emacs-lisp
+;; undo-tree
+
+;; (setq global-undo-tree-mode t)
+(map! "<f5>" #'undo-tree-visualize)
+(map! "<f3>" #'treemacs)
+;; (global-set-key (kbd "SPC /") #'+default/search-buffer)
+;; (global-set-key (kbd "M-.") #'+default/search-cwd)
+
+ (defun init_undo-tree ()
+     ;;  do awesome things
+     (undo-tree-mode)
+   )
+ (add-hook 'buffer-list-update-hook 'init_undo-tree)
+
+#+end_src
+
+
+**** zlc
+
+#+begin_src emacs-lisp
+
+;; zlc is zsh something
+(require 'zlc)
+(zlc-mode t)
+
+#+end_src
+
+
+**** Beacon
+
+#+begin_src emacs-lisp
+
+;; beacon
+
+(beacon-mode 1)
+;; (after! lsp-mode (setq lsp-enable-file-watchers nil))
+
+
+#+end_src
+
+
+
+
+**** Company-completion
+
+#+begin_src emacs-lisp
+
+;; company-completion
+
+;;; completion/company/config.el -**- lexical-binding: t; -**-
+
+(use-package! company
+  :commands (company-complete-common
+             company-complete-common-or-cycle
+             company-manual-begin
+             company-grab-line)
+  :hook (doom-first-input . global-company-mode)
+  :init
+  (setq! company-minimum-prefix-length 1
+        company-tooltip-limit 14
+        company-tooltip-align-annotations t
+        company-require-match 'never
+        company-global-modes
+        '(not erc-mode
+              circe-mode
+              message-mode
+              help-mode
+              gud-mode
+              vterm-mode)
+        company-frontends
+        '(company-pseudo-tooltip-frontend  ; always show candidates in overlay tooltip
+          company-echo-metadata-frontend)  ; show selected candidate docs in echo area
+
+        ;; Buffer-local backends will be computed when loading a major mode, so
+        ;; only specify a global default here.
+        company-backends '(company-capf
+                           company-files
+                           company-dabbrev-code
+                           company-keywords
+                           company-dict
+                           company-semantic
+                           company-etags
+                           company-abbrev
+                           company-yasnippet
+                           company-tempo)
+
+        ;; These auto-complete the current selection when
+        ;; `company-auto-commit-chars' is typed. This is too magical. We
+        ;; already have the much more explicit RET and TAB.
+        ;; company-auto-commit nil
+
+        ;; Only search the current buffer for `company-dabbrev' (a backend that
+        ;; suggests text your open buffers). This prevents Company from causing
+        ;; lag once you have a lot of buffers open.
+        company-dabbrev-other-buffers nil
+        ;; Make `company-dabbrev' fully case-sensitive, to improve UX with
+        ;; domain-specific words with particular casing.
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil)
+
+  (when (modulep! +tng)
+    (add-hook 'global-company-mode-hook #'company-tng-mode))
+
+  :config
+  (when (modulep! :editor evil)
+    (add-hook 'company-mode-hook #'evil-normalize-keymaps)
+    (add-hook! 'evil-normal-state-entry-hook
+      (defun +company-abort-h ()
+        ;; HACK `company-abort' doesn't no-op if company isn't active; causing
+        ;;      unwanted side-effects, like the suppression of messages in the
+        ;;      echo-area.
+        ;; REVIEW Revisit this to refactor; shouldn't be necessary!
+        (when company-candidates
+          (company-abort))))
+    ;; Allow users to switch between backends on the fly. E.g. C-x C-s followed
+    ;; by C-x C-n, will switch from `company-yasnippet' to
+    ;; `company-dabbrev-code'.
+    (defadvice! +company--abort-previous-a (&rest _)
+      :before #'company-begin-backend
+      (company-abort)))
+
+  (add-hook 'after-change-major-mode-hook #'+company-init-backends-h 'append)
+
+
+  ;; NOTE Fix #1335: ensure `company-emulation-alist' is the first item of
+  ;;      `emulation-mode-map-alists', thus higher priority than keymaps of
+  ;;      evil-mode. We raise the priority of company-mode keymaps
+  ;;      unconditionally even when completion is not activated. This should not
+  ;;      cause problems, because when completion is activated, the value of
+  ;;      `company-emulation-alist' is ((t . company-my-keymap)), when
+  ;;      completion is not activated, the value is ((t . nil)).
+  (add-hook! 'evil-local-mode-hook
+    (when (memq 'company-emulation-alist emulation-mode-map-alists)
+      (company-ensure-emulation-alist)))
+
+  ;; Fix #4355: allow eldoc to trigger after completions.
+  (after! eldoc
+    (eldoc-add-command 'company-complete-selection
+                       'company-complete-common
+                       'company-capf
+                       'company-abort)))
+
+
+;;
+;;; Packages
+
+(after! company-files
+  ;; Fix `company-files' completion for org file:**** links
+  (add-to-list 'company-files--regexps "file:\\(\\(?:\\.\\{1,2\\}/\\|~/\\|/\\)[^\]\n]**\\)"))
+
+
+(use-package! company-box
+  :when (modulep! +childframe)
+  :hook (company-mode . company-box-mode)
+  :config
+  (setq company-box-show-single-candidate t
+        company-box-backends-colors nil
+        company-box-max-candidates 50
+        company-box-icons-alist 'company-box-icons-all-the-icons
+        ;; Move company-box-icons--elisp to the end, because it has a catch-all
+        ;; clause that ruins icons from other backends in elisp buffers.
+        company-box-icons-functions
+        (cons #'+company-box-icons--elisp-fn
+              (delq 'company-box-icons--elisp
+                    company-box-icons-functions))
+        company-box-icons-all-the-icons
+        (let ((all-the-icons-scale-factor 0.8))
+          `((Unknown       . ,(all-the-icons-material "find_in_page"             :face 'all-the-icons-purple))
+            (Text          . ,(all-the-icons-material "text_fields"              :face 'all-the-icons-green))
+            (Method        . ,(all-the-icons-material "functions"                :face 'all-the-icons-red))
+            (Function      . ,(all-the-icons-material "functions"                :face 'all-the-icons-red))
+            (Constructor   . ,(all-the-icons-material "functions"                :face 'all-the-icons-red))
+            (Field         . ,(all-the-icons-material "functions"                :face 'all-the-icons-red))
+            (Variable      . ,(all-the-icons-material "adjust"                   :face 'all-the-icons-blue))
+            (Class         . ,(all-the-icons-material "class"                    :face 'all-the-icons-red))
+            (Interface     . ,(all-the-icons-material "settings_input_component" :face 'all-the-icons-red))
+            (Module        . ,(all-the-icons-material "view_module"              :face 'all-the-icons-red))
+            (Property      . ,(all-the-icons-material "settings"                 :face 'all-the-icons-red))
+            (Unit          . ,(all-the-icons-material "straighten"               :face 'all-the-icons-red))
+            (Value         . ,(all-the-icons-material "filter_1"                 :face 'all-the-icons-red))
+            (Enum          . ,(all-the-icons-material "plus_one"                 :face 'all-the-icons-red))
+            (Keyword       . ,(all-the-icons-material "filter_center_focus"      :face 'all-the-icons-red))
+            (Snippet       . ,(all-the-icons-material "short_text"               :face 'all-the-icons-red))
+            (Color         . ,(all-the-icons-material "color_lens"               :face 'all-the-icons-red))
+            (File          . ,(all-the-icons-material "insert_drive_file"        :face 'all-the-icons-red))
+            (Reference     . ,(all-the-icons-material "collections_bookmark"     :face 'all-the-icons-red))
+            (Folder        . ,(all-the-icons-material "folder"                   :face 'all-the-icons-red))
+            (EnumMember    . ,(all-the-icons-material "people"                   :face 'all-the-icons-red))
+            (Constant      . ,(all-the-icons-material "pause_circle_filled"      :face 'all-the-icons-red))
+            (Struct        . ,(all-the-icons-material "streetview"               :face 'all-the-icons-red))
+            (Event         . ,(all-the-icons-material "event"                    :face 'all-the-icons-red))
+            (Operator      . ,(all-the-icons-material "control_point"            :face 'all-the-icons-red))
+            (TypeParameter . ,(all-the-icons-material "class"                    :face 'all-the-icons-red))
+            (Template      . ,(all-the-icons-material "short_text"               :face 'all-the-icons-green))
+            (ElispFunction . ,(all-the-icons-material "functions"                :face 'all-the-icons-red))
+            (ElispVariable . ,(all-the-icons-material "check_circle"             :face 'all-the-icons-blue))
+            (ElispFeature  . ,(all-the-icons-material "stars"                    :face 'all-the-icons-orange))
+            (ElispFace     . ,(all-the-icons-material "format_paint"             :face 'all-the-icons-pink)))))
+
+  ;; HACK Fix oversized scrollbar in some odd cases
+  ;; REVIEW `resize-mode' is deprecated and may stop working in the future.
+  ;; TODO PR me upstream?
+  (setq x-gtk-resize-child-frames 'resize-mode)
+
+  ;; Disable tab-bar in company-box child frames
+  ;; TODO PR me upstream!
+  (add-to-list 'company-box-frame-parameters '(tab-bar-lines . 0))
+
+  ;; Don't show documentation in echo area, because company-box displays its own
+  ;; in a child frame.
+  (delq! 'company-echo-metadata-frontend company-frontends)
+
+  (defun +company-box-icons--elisp-fn (candidate)
+    (when (derived-mode-p 'emacs-lisp-mode)
+      (let ((sym (intern candidate)))
+        (cond ((fboundp sym)  'ElispFunction)
+              ((boundp sym)   'ElispVariable)
+              ((featurep sym) 'ElispFeature)
+              ((facep sym)    'ElispFace)))))
+
+  ;; `company-box' performs insufficient frame-live-p checks. Any command that
+  ;; "cleans up the session" will break company-box.
+  ;; TODO Fix this upstream.
+  (defadvice! +company-box-detect-deleted-frame-a (frame)
+    :filter-return #'company-box--get-frame
+    (if (frame-live-p frame) frame))
+  (defadvice! +company-box-detect-deleted-doc-frame-a (_selection frame)
+    :before #'company-box-doc
+    (and company-box-doc-enable
+         (frame-local-getq company-box-doc-frame frame)
+         (not (frame-live-p (frame-local-getq company-box-doc-frame frame)))
+         (frame-local-setq company-box-doc-frame nil frame))))
+
+
+(use-package! company-dict
+  :defer t
+  :config
+  (setq company-dict-dir (expand-file-name "dicts" doom-user-dir))
+  (add-hook! 'doom-project-hook
+    (defun +company-enable-project-dicts-h (mode &rest _)
+      "Enable per-project dictionaries."
+      (if (symbol-value mode)
+          (add-to-list 'company-dict-minor-mode-list mode nil #'eq)
+        (setq company-dict-minor-mode-list (delq mode company-dict-minor-mode-list))))))
+
+
+
+
+
+
+
+
+
+
+
+
+;; Org mode file path completion
+
+(after! org (set-company-backend! 'org-mode 'company-files 'company-capf))
+(after! sh-script (set-company-backend! 'company-files ))
+(after! cc-mode (set-company-backend! 'company-files 'company-capf))
+
+(after! js2-mode
+  (set-company-backend! 'js2-mode 'company-tide 'company-yasnippet 'company-files))
+
+(after! sh-script
+  (set-company-backend! 'sh-mode
+    '(company-shell :with company-yasnippet 'company-files)))
+
+(after! cc-mode
+  (set-company-backend! 'c-mode
+    '(:separate company-irony-c-headers company-irony 'company-files)))
+#+end_src
+
+#+RESULTS:
+
+
+**** gptel
+
+#+begin_src emacs-lisp
+
+;; gptel
+;;
+;;
+;;
+;;
+;;
+(use-package! gptel
+ :config
+ ;; (setq! gptel-api-key (shell-command-to-string "awk -F \"=\" \'{print $2}\' ~/.zshrc_private | head -n 1")))
+ (setq! gptel-api-key "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"))
+
+#+end_src
+
+
+**** sudo-edit
+
+#+begin_src emacs-lisp
+
+;; sudo-edit
+
+(global-set-key (kbd "C-c C-r SPC-t-S") 'sudo-edit)
+;; dired-toggle-sudo
+
+#+end_src
+
+
+**** Helm
+
+#+begin_src emacs-lisp
+
+(setq helm-follow-mode-persistent t)
+;; (setq helm-follow-input-idle-delay 0.5)
+
+(setq helm-ff-ignore-following-on-directory t)
+#+end_src
+
+#+RESULTS:
+: t
+
+
+**** Demap
+
+#+begin_src emacs-lisp
+
+;; (after! (solaire-mode demap)
+  (setq demap-minimap-window-side  'right)
+  (setq demap-minimap-window-width 15)
+  (let ((gray1 "#1A1C22")
+        (gray2 "#21242b")
+        (gray3 "#282c34")
+        (gray4 "#2b3038") )
+    (face-spec-set 'demap-minimap-font-face
+                   `((t :background ,gray2
+                        :inherit    unspecified
+                        :family     "minimap"
+                        :height     10          )))
+    (face-spec-set 'demap-visible-region-face
+                   `((t :background ,gray4
+                        :inherit    unspecified )))
+    (face-spec-set 'demap-visible-region-inactive-face
+                   `((t :background ,gray3
+                        :inherit    unspecified )))
+    (face-spec-set 'demap-current-line-face
+                   `((t :background ,gray1
+                        :inherit    unspecified )))
+    (face-spec-set 'demap-current-line-inactive-face
+                   `((t :background ,gray1
+                        :inherit    unspecified ))))
+
+;; (demap-open)
+
+;; (add-hook 'buffer 'demap-open)
+;; (add-hook 'kill-buffer-hook 'demap-close)
+
+
+#+end_src
+
+* DoomInit
+
+#+title: DoomInit
+#+DESCRIPTION: Rex's Doom Emacs init
+#+AUTHOR: Rex Ackermann
+#+EMAIL : ackermann88888@gmail.com
+#+DATE: 2023-05-27 00:52:46+06:00
+#+property: header-args :tangle ~/.config/doom/init.el
+#+auto_tangle: t
+#+startup: showeverything
+
+
+** TABLE OF CONTENTS :toc:
+- [[#start][start]]
+- [[#message][Message]]
+- [[#main][Main]]
+
+** start
+
+#+begin_src emacs-lisp
+
+;; init.el -**- lexical-binding: t; -**-
+
+#+end_src
+
+
+** Message
+
+This file controls what Doom modules are enabled and what order they load
+in. Remember to run 'doom sync' after modifying it!
+
+NOTE Press 'SPC h d h' (or 'C-h d h' for non-vim users) to access Doom's
+     documentation. There you'll find a link to Doom's Module Index where all
+     of our modules are listed, including what flags they support.
+
+NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
+     'C-c c k' for non-vim users) to view its documentation. This works on
+     flags as well (those symbols that start with a plus).
+
+     Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
+     directory (for easy access to its source code).
+
+** Main
+
+#+begin_src emacs-lisp
+
+(doom! :input
+       ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
+       ;;chinese
+       ;;japanese
+       layout            ; auie,ctsrnm is the superior home row
+
+       :completion
+       (company +childframe)           ; the ultimate code completion backend
+       helm              ; the **other** search engine for love and life
+       ;; ido               ; the other **other** search engine...
+       ;; ivy               ; a search engine for love and life
+       ;; vertico           ; the search engine of the future
+
+       :ui
+       deft              ; notational velocity for Emacs
+       doom              ; what makes DOOM look the way it does
+       doom-dashboard    ; a nifty splash screen for Emacs
+       ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       (emoji +unicode)  ; 🙂
+       hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
+       hydra
+       indent-guides     ; highlighted indent columns
+       ligatures         ; ligatures and symbols to make your code pretty again
+       minimap           ; show a map of the code on the side
+       modeline          ; snazzy, Atom-inspired modeline, plus API
+       nav-flash         ; blink cursor line after big motions
+       neotree           ; a project drawer, like NERDTree for vim
+       ophints           ; highlight the region an operation acts on
+       (popup +defaults)   ; tame sudden yet inevitable temporary windows
+       tabs              ; a tab bar for Emacs
+       treemacs          ; a project drawer, like neotree but cooler
+       unicode           ; extended unicode support for various languages
+       (vc-gutter +pretty) ; vcs diff in the fringe
+       vi-tilde-fringe   ; fringe tildes to mark beyond EOB
+       window-select     ; visually switch windows
+       workspaces        ; tab emulation, persistence & separate workspaces
+       zen               ; distraction-free coding or writing
+
+       :editor
+       (evil +everywhere); come to the dark side, we have cookies
+       file-templates    ; auto-snippets for empty files
+       fold              ; (nigh) universal code folding
+       ;;(format +onsave)  ; automated prettiness
+       ;;god               ; run Emacs commands without modifier keys
+       ;; lispy             ; vim for lisp, for people who don't like vim
+       multiple-cursors  ; editing in many places at once
+       ;;objed             ; text object editing for the innocent
+       ;;parinfer          ; turn lisp into python, sort of
+       ;;rotate-text       ; cycle region at point between text candidates
+       snippets          ; my elves. They type so I don't have to
+       word-wrap         ; soft wrapping with language-aware indent
+
+       :emacs
+       dired             ; making dired pretty [functional]
+       electric          ; smarter, keyword-based electric-indent
+       ibuffer         ; interactive buffer management
+       undo              ; persistent, smarter undo for your inevitable mistakes
+       vc                ; version-control and Emacs, sitting in a tree
+
+       :term
+       eshell            ; the elisp shell that works everywhere
+       shell             ; simple shell REPL for Emacs
+       term              ; basic terminal emulator for Emacs
+       vterm             ; the best terminal emulation in Emacs
+
+       :checkers
+       syntax              ; tasing you for every semicolon you forget
+       (spell +flyspell) ; tasing you for misspelling mispelling
+       grammar           ; tasing grammar mistake every you make
+
+       :tools
+       ;;ansible
+       ;;biblio            ; Writes a PhD for you (citation needed)
+       debugger          ; FIXME stepping through code, to help you add bugs
+       direnv
+       ;;docker
+       ;;editorconfig      ; let someone else argue about tabs vs spaces
+       ;;ein               ; tame Jupyter notebooks with emacs
+       (eval +overlay)     ; run code, run (also, repls)
+       gist              ; interacting with github gists
+       lookup              ; navigate your code and its documentation
+       ;; lsp               ; M-x vscode
+       (lsp +eglot)
+       magit             ; a git porcelain for Emacs
+       make              ; run make tasks from Emacs
+       pass              ; password manager for nerds
+       pdf               ; pdf enhancements
+       ;;prodigy           ; FIXME managing external services & code builders
+       rgb               ; creating color strings
+       ;;taskrunner        ; taskrunner for all your projects
+       ;;terraform         ; infrastructure as code
+       tmux              ; an API for interacting with tmux
+       tree-sitter       ; syntax and parsing, sitting in a tree...
+       upload            ; map local to remote projects via ssh/ftp
+
+       :os
+       (:if IS-MAC macos)  ; improve compatibility with macOS
+       tty               ; improve the terminal Emacs experience
+
+       :lang
+       ;;agda              ; types of types of types of types...
+       ;;beancount         ; mind the GAAP
+       (cc +lsp)         ; C > C++ == 1
+       ;;clojure           ; java with a lisp
+       common-lisp       ; if you've seen one lisp, you've seen them all
+       ;;coq               ; proofs-as-programs
+       ;;crystal           ; ruby at the speed of c
+       ;;csharp            ; unity, .NET, and mono shenanigans
+       data              ; config/data formats
+       ;;(dart +flutter)   ; paint ui and not much else
+       ;;dhall
+       ;;elixir            ; erlang done right
+       ;;elm               ; care for a cup of TEA?
+       emacs-lisp        ; drown in parentheses
+       ;;erlang            ; an elegant language for a more civilized age
+       ;;ess               ; emacs speaks statistics
+       ;;factor
+       ;;faust             ; dsp, but you get to keep your soul
+       ;;fortran           ; in FORTRAN, GOD is REAL (unless declared INTEGER)
+       ;;fsharp            ; ML stands for Microsoft's Language
+       ;;fstar             ; (dependent) types and (monadic) effects and Z3
+       ;;gdscript          ; the language you waited for
+       ;;(go +lsp)         ; the hipster dialect
+       ;;(graphql +lsp)    ; Give queries a REST
+       ;;(haskell +lsp)    ; a language that's lazier than I am
+       ;;hy                ; readability of scheme w/ speed of python
+       ;;idris             ; a language you can depend on
+       json              ; At least it ain't XML
+       ;; (java +lsp)       ; the poster child for carpal tunnel syndrome
+       javascript        ; all(hope(abandon(ye(who(enter(here))))))
+       ;;julia             ; a better, faster MATLAB
+       ;;kotlin            ; a better, slicker Java(Script)
+       latex             ; writing papers in Emacs has never been so fun
+       lean              ; for folks with too much to prove
+       ledger            ; be audit you can be
+       (lua + lsp)               ; one-based indices? one-based indices
+       markdown          ; writing docs for people to ignore
+       ;;nim               ; python + lisp at the speed of c
+       ;;nix               ; I hereby declare "nix geht mehr!"
+       ;;ocaml             ; an objective camel
+       org               ; organize your plain life in plain text
+       php               ; perl's insecure younger brother
+       ;;plantuml          ; diagrams for confusing people more
+       ;;purescript        ; javascript, but functional
+       (python + lsp)            ; beautiful is better than ugly
+       ;;qt                ; the 'cutest' gui framework ever
+       ;;racket            ; a DSL for DSLs
+       ;;raku              ; the artist formerly known as perl6
+       rest              ; Emacs as a REST client
+       rst               ; ReST in peace
+       ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+       (rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       ;;scala             ; java, but good
+       ;;(scheme +guile)   ; a fully conniving family of lisps
+       (sh +lsp +powershell +fish)                ; she sells {ba,z,fi}sh shells on the C xor
+       ;;sml
+       ;;solidity          ; do you need a blockchain? No.
+       ;;swift             ; who asked for emoji variables?
+       ;;terra             ; Earth and Moon in alignment for performance.
+       web               ; the tubes
+       yaml              ; JSON, but readable
+       zig               ; C, but simpler
+
+       :email
+       ;;(mu4e +org +gmail)
+       ;;notmuch
+       ;;(wanderlust +gmail)
+
+       :app
+       calendar
+       emms
+       everywhere        ; **leave** Emacs!? You must be joking
+       irc               ; how neckbeards socialize
+       (rss +org)        ; emacs as an RSS reader
+       twitter           ; twitter client https://twitter.com/vnought
+
+       :config
+       ;;literate
+       (default +bindings +smartparens))
+
+#+end_src
+
+
+* DoomPackages
+
+#+title: DoomPackages
+#+DESCRIPTION: Rex's Doom Emacs packages
+#+AUTHOR: Rex Ackermann
+#+EMAIL : ackermann88888@gmail.com
+#+DATE: 2023-05-27 00:50:30+06:00
+#+property: header-args :tangle ~/.config/doom/packages.el
+#+auto_tangle: t
+#+startup: showeverything
+
+
+To install a package with Doom you must declare them here and run 'doom sync'
+on the command line, then restart Emacs for the changes to take effect -- or
+use 'M-x doom/reload'.
+
+
+To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
+(package! some-package)
+
+To install a package directly from a remote git repo, you must specify a
+`:recipe'. You'll find documentation on what `:recipe' accepts here:
+https://github.com/radian-software/straight.el#the-recipe-format
+(package! another-package
+  :recipe (:host github :repo "username/repo"))
+
+If the package you are trying to install does not contain a PACKAGENAME.el
+file, or is located in a subdirectory of the repo, you'll need to specify
+`:files' in the `:recipe':
+(package! this-package
+  :recipe (:host github :repo "username/repo"
+           :files ("some-file.el" "src/lisp/**.el")))
+
+If you'd like to disable a package included with Doom, you can do so here
+with the `:disable' property:
+(package! builtin-package :disable t)
+
+You can override the recipe of a built in package without having to specify
+all the properties for `:recipe'. These will inherit the rest of its recipe
+from Doom or MELPA/ELPA/Emacsmirror:
+(package! builtin-package :recipe (:nonrecursive t))
+(package! builtin-package-2 :recipe (:repo "myfork/package"))
+
+Specify a `:branch' to install a package from a particular branch or tag.
+This is required for some packages whose default branch isn't 'master' (which
+our package manager can't deal with; see radian-software/straight.el#279)
+(package! builtin-package :recipe (:branch "develop"))
+
+Use `:pin' to specify a particular commit to install.
+(package! builtin-package :pin "1a2b3c4d5e")
+
+
+Doom's packages are pinned to a specific commit and updated from release to
+release. The `unpin!' macro allows you to unpin single packages...
+(unpin! pinned-package)
+...or multiple packages
+(unpin! pinned-package another-pinned-package)
+...Or **all** packages (NOT RECOMMENDED; will likely break things)
+(unpin! t)
+
+** Packages
+
+#+begin_src emacs-lisp
+
+;-**- no-byte-compile: t; -**-
+
+
+
+(package! lsp-mode)
+(package! lsp-ui)
+(package! clippy)
+(package! beacon)
+(package! yasnippet)
+(package! yasnippet-snippets)
+(package! company-box)
+(package! company-dict)
+(package! company-mode)
+(package! company-shell)
+(package! fish-mode)
+(package! powershell-mode)
+(package! workroom)
+;(package! chatgpt
+;  :recipe (:host github :repo "joshcho/ChatGPT.el" :files ("dist" "**.el")))
+(package! gptel)
+(package! helm-swoop)
+(package! sudo-edit :recipe (:host github :repo "nflath/sudo-edit"))
+(package! auto-sudoedit :recipe (:host github :repo "ncaq/auto-sudoedit" ))
+(package! undo-tree :recipe (:host github :repo "emacs-straight/undo-tree" ))
+(package! helm-xref :recipe (:host github :repo "brotzeit/helm-xref" ))
+(package! dired-sidebar)
+(package! imenu-list)
+(package! clippy)
+(package! gamegrid)
+(package! wc-mode)
+(package! zlc)
+(package! org-auto-tangle)
+;; (package! sublimity)
+(package! demap)
+(package! realgud)
+(package! spaceline)
+(package! ox-pandoc)
+
+#+end_src
