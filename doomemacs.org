@@ -1,7 +1,7 @@
 #+title: DoomEmacsConfigs
 #+DESCRIPTION: All Doom Emacs Configs in one file.
 #+AUTHOR: Rex Ackermann
-#+EMAIL : ackermann88888@gmail.com
+#+EMAIL: ackermann88888@gmail.com
 #+DATE: 2023-06-28 14:23:43+06:00
 #+OPTIONS: toc:5
 #+auto_tangle: t
