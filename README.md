@@ -1,0 +1,2 @@
+# rexdoom
+doom emacs config
