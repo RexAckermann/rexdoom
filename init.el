@@ -1,5 +1,3 @@
-;; init.el -*- lexical-binding: t; -*-
-
 (doom! :input
        ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
        ;;chinese
@@ -8,8 +6,8 @@
 
        :completion
        (company +childframe)           ; the ultimate code completion backend
-       helm              ; the *other* search engine for love and life
-       ;; ido               ; the other *other* search engine...
+       helm              ; the **other** search engine for love and life
+       ;; ido               ; the other **other** search engine...
        ;; ivy               ; a search engine for love and life
        ;; vertico           ; the search engine of the future
 
@@ -171,7 +169,7 @@
        :app
        calendar
        emms
-       everywhere        ; *leave* Emacs!? You must be joking
+       everywhere        ; **leave** Emacs!? You must be joking
        irc               ; how neckbeards socialize
        (rss +org)        ; emacs as an RSS reader
        twitter           ; twitter client https://twitter.com/vnought

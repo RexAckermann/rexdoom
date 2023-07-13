@@ -1,4 +1,4 @@
-;-*- no-byte-compile: t; -*-
+;-**- no-byte-compile: t; -**-
 
 
 
@@ -16,7 +16,7 @@
 (package! powershell-mode)
 (package! workroom)
 ;(package! chatgpt
-;  :recipe (:host github :repo "joshcho/ChatGPT.el" :files ("dist" "*.el")))
+;  :recipe (:host github :repo "joshcho/ChatGPT.el" :files ("dist" "**.el")))
 (package! gptel)
 (package! helm-swoop)
 (package! sudo-edit :recipe (:host github :repo "nflath/sudo-edit"))
@@ -35,3 +35,4 @@
 (package! realgud)
 (package! spaceline)
 (package! ox-pandoc)
+(package! nix-mode)

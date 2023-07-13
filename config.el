@@ -1,11 +1,11 @@
-; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+; $DOOMDIR/config.el -**- lexical-binding: t; -**-
 
 (setq user-full-name "Rex Ackermann"
       user-mail-address "ackermann88888@gmail.com")
 
 (setq org-directory "~/org/")
 
-(eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+(eval-after-load 'tramp '(setenv "SHELL" "/bin/sh"))
 
 ;;; Emacs Load Path
 (setq load-path (cons "~/.config/scripts/" load-path))
@@ -133,7 +133,7 @@ absolute path. Finally load eglot."
   (interactive)
   (when (and (buffer-file-name)
              (string= (file-name-extension (buffer-file-name)) "docx"))
-    (let* ((docx-file (buffer-file-name))
+    (let** ((docx-file (buffer-file-name))
            (org-file (concat (file-name-sans-extension docx-file) ".org")))
       (call-process "pandoc" nil nil nil "--from=docx" "--to=org"
                     docx-file "-o" org-file)
@@ -158,10 +158,10 @@ absolute path. Finally load eglot."
 ;;         (lsp-patch-on-change-event))
 
 ;;     (save-excursion
-;;       (-let** (virtual-buffer
+;;       (-let**** (virtual-buffer
 ;;               (wcb (lambda (f)
 ;;                      (with-current-buffer (plist-get virtual-buffer :buffer)
-;;                        (-let** (((&plist :major-mode :buffer-file-name
+;;                        (-let**** (((&plist :major-mode :buffer-file-name
 ;;                                         :goto-buffer :workspaces) virtual-buffer)
 ;;                                (lsp--virtual-buffer virtual-buffer)
 ;;                                (lsp--buffer-workspaces workspaces))
@@ -338,7 +338,7 @@ absolute path. Finally load eglot."
 
 ;; company-completion
 
-;;; completion/company/config.el -*- lexical-binding: t; -*-
+;;; completion/company/config.el -**- lexical-binding: t; -**-
 
 (use-package! company
   :commands (company-complete-common
@@ -436,8 +436,8 @@ absolute path. Finally load eglot."
 ;;; Packages
 
 (after! company-files
-  ;; Fix `company-files' completion for org file:** links
-  (add-to-list 'company-files--regexps "file:\\(\\(?:\\.\\{1,2\\}/\\|~/\\|/\\)[^\]\n]*\\)"))
+  ;; Fix `company-files' completion for org file:**** links
+  (add-to-list 'company-files--regexps "file:\\(\\(?:\\.\\{1,2\\}/\\|~/\\|/\\)[^\]\n]**\\)"))
 
 
 (use-package! company-box
@@ -612,3 +612,5 @@ absolute path. Finally load eglot."
 
 ;; (add-hook 'buffer 'demap-open)
 ;; (add-hook 'kill-buffer-hook 'demap-close)
+
+;; init.el -**- lexical-binding: t; -**-
