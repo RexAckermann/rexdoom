@@ -168,13 +168,24 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 
 **** Transparency
 
+toogle transparency with Space t t
+
 #+begin_src emacs-lisp
 
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
 ;;(set-frame-parameter (selected-frame) 'alpha <both>)
-(set-frame-parameter (selected-frame) 'alpha '(95 . 85))
 (add-to-list 'default-frame-alist '(alpha . (95 . 85)))
 
+(defun toggle-transparency ()
+  (interactive)
+  (let ((alpha (frame-parameter nil 'alpha)))
+    (if (eq
+     (if (numberp alpha)
+         alpha
+       (cdr alpha)) ; may also be nil
+     95)
+    (set-frame-parameter nil 'alpha '(75 . 85))
+      (set-frame-parameter nil 'alpha '(95 . 95)))))
 #+end_src
 
 
@@ -239,6 +250,7 @@ A minimap sidebar displaying a smaller version of the current buffer on either t
       :desc "Go to" "." #'helm-find-files
       :desc "Sudo-Edit" "t s" #'sudo-edit
       :desc "Imenu-List" "t I" #'imenu-list-smart-toggle
+      :desc "Toggle Transparency" "t t" #'toggle-transparency
       )
 
 #+end_src
@@ -1216,6 +1228,8 @@ NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
        (default +bindings +smartparens))
 
 #+end_src
+
+#+RESULTS:
 
 
 * DoomPackages

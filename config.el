@@ -31,8 +31,18 @@
 
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
 ;;(set-frame-parameter (selected-frame) 'alpha <both>)
-(set-frame-parameter (selected-frame) 'alpha '(95 . 85))
 (add-to-list 'default-frame-alist '(alpha . (95 . 85)))
+
+(defun toggle-transparency ()
+  (interactive)
+  (let ((alpha (frame-parameter nil 'alpha)))
+    (if (eq
+     (if (numberp alpha)
+         alpha
+       (cdr alpha)) ; may also be nil
+     95)
+    (set-frame-parameter nil 'alpha '(75 . 85))
+      (set-frame-parameter nil 'alpha '(95 . 95)))))
 
 ;;       '((height . 720)
 ;;         (width . 1080)))
@@ -64,6 +74,7 @@
       :desc "Go to" "." #'helm-find-files
       :desc "Sudo-Edit" "t s" #'sudo-edit
       :desc "Imenu-List" "t I" #'imenu-list-smart-toggle
+      :desc "Toggle Transparency" "t t" #'toggle-transparency
       )
 
 ;; (defun emacsclient_startup (_)
