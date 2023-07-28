@@ -41,7 +41,7 @@
          alpha
        (cdr alpha)) ; may also be nil
      95)
-    (set-frame-parameter nil 'alpha '(75 . 85))
+    (set-frame-parameter nil 'alpha '(80 . 85))
       (set-frame-parameter nil 'alpha '(95 . 95)))))
 
 ;;       '((height . 720)
