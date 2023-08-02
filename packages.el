@@ -36,3 +36,4 @@
 (package! spaceline)
 (package! ox-pandoc)
 (package! nix-mode)
+(package! emacs-everywhere)

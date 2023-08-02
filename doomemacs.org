@@ -1333,5 +1333,6 @@ release. The `unpin!' macro allows you to unpin single packages...
 (package! spaceline)
 (package! ox-pandoc)
 (package! nix-mode)
+(package! emacs-everywhere)
 
 #+end_src
