@@ -32,6 +32,7 @@
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
 ;;(set-frame-parameter (selected-frame) 'alpha <both>)
 (add-to-list 'default-frame-alist '(alpha . (95 . 85)))
+(set-frame-parameter nil 'alpha '(80 . 85))
 
 (defun toggle-transparency ()
   (interactive)
